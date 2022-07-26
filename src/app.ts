@@ -1,5 +1,6 @@
 import express, { Express, NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import helmet from 'helmet';
 import routes from './routes';
 
 dotenv.config();
@@ -8,6 +9,7 @@ const app: Express = express();
 const port = process.env.APP_PORT || '3001';
 
 // Middlewares
+app.use(helmet());
 app.use(express.json());
 
 // Custom middleware
