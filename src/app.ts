@@ -1,5 +1,6 @@
 import express, { Express, NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import routes from './routes';
 
 dotenv.config();
 
@@ -22,29 +23,7 @@ const middleware =
 app.use(middleware({ name: 'PierreMu' }));
 
 // Routes
-app.get('/', (req: Request, res: Response) => res.send('Welcome on LabAPI'));
-app.get('/api/books/:bookId', (req: Request, res: Response) => {
-  const resData = {
-    name: res.locals.name,
-    bookId: req.params.bookId,
-  };
-
-  res.send(resData);
-});
-
-async function throwsError() {
-  throw new Error('Boom !');
-}
-
-app.get('/error', async (req: Request, res: Response) => {
-  try {
-    await throwsError();
-
-    res.sendStatus(200);
-  } catch (e) {
-    res.status(400).send('Something bad happened ...');
-  }
-});
+routes(app);
 
 // Start listening
 app.listen(port, () => {
