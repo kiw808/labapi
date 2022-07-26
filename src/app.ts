@@ -32,6 +32,20 @@ app.get('/api/books/:bookId', (req: Request, res: Response) => {
   res.send(resData);
 });
 
+async function throwsError() {
+  throw new Error('Boom !');
+}
+
+app.get('/error', async (req: Request, res: Response) => {
+  try {
+    await throwsError();
+
+    res.sendStatus(200);
+  } catch (e) {
+    res.status(400).send('Something bad happened ...');
+  }
+});
+
 // Start listening
 app.listen(port, () => {
   console.log(`App listening on http://localhost:${port}`);
