@@ -1,33 +1,33 @@
-import express, { Express, NextFunction, Request, Response } from 'express';
-import dotenv from 'dotenv';
+import 'dotenv/config';
+import express, { Express, Request, Response, NextFunction } from 'express';
 import helmet from 'helmet';
-import routes from './routes';
-
-dotenv.config();
+import cors from 'cors';
 
 const app: Express = express();
-const port = process.env.APP_PORT || '3001';
+const PORT = process.env.APP_PORT || '9000';
 
-// Middlewares
 app.use(helmet());
 app.use(express.json());
+app.use(cors());
 
-// Custom middleware
-// The middleware is a curried function (a functioin that returns a function)
-const middleware =
-  ({ name }: { name: string }) =>
-  (req: Request, res: Response, next: NextFunction) => {
-    res.locals.name = name;
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin,X-Requested-With,Content,Accept,Content-Type,Authorization',
+  );
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE');
 
-    next();
-  };
+  next();
+});
 
-app.use(middleware({ name: 'PierreMu' }));
+app.get('/', (req: Request, res: Response) => {
+  res.status(200).json({
+    message: 'Server is working',
+  });
+});
 
-// Routes
-routes(app);
-
-// Start listening
-app.listen(port, () => {
-  console.log(`App listening on http://localhost:${port}`);
+app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
+  console.log(`App listening on http://localhost:${PORT}`);
 });
