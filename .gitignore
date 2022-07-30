@@ -2,7 +2,6 @@
 node_modules/
 
 # Files
-.env.local
-.env.production
+.env
 
 package-lock.json
