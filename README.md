@@ -10,7 +10,11 @@ A sandbox Node.js API.
   ```
   npm install
   ```
-- Start the development server
+- Start docker compose
   ```
   make start
+  ```
+- Start the development server
+  ```
+  make dev
   ```
