@@ -16,5 +16,5 @@ A sandbox Node.js API.
   ```
 - Start the development server
   ```
-  npm run start:dev
+  make dev
   ```
